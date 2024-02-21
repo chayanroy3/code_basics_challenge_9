@@ -1,0 +1,30 @@
+$(document).on("click", ".vdoPopup", function () {
+    let iFrame = $("#youtube_iframe");
+    let srcUrl = $(this).data("url");
+    let title = $(this).data("title");
+
+    let videoSource = $(this).data("source");
+
+    //vimeo
+    if (videoSource == "vimeo") {
+        $("#youtube_iframe").hide();
+        $("#vimeo_iframe").show();
+        iFrame = $("#vimeo_iframe");
+        srcUrl = $(this).data("url") + `&title=0&pip=1&responsive=1&speed=1`;
+    } else {
+        //youtube
+        $("#youtube_iframe").show();
+        $("#vimeo_iframe").hide();
+    }
+
+    $("#video_previewLabeltxt").html(title);
+    iFrame.prop("src", srcUrl);
+    iFrame.prop("title", title);
+    $("#video_preview").modal("show");
+});
+
+$("#video_preview").on("hide.bs.modal", function (e) {
+    $("#video_previewLabeltxt").html("");
+    $(".modal-body iframe").attr("src", "");
+    $(".modal-body iframe").attr("title", "");
+});
